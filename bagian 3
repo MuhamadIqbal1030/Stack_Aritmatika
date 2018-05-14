@@ -1,0 +1,20 @@
+int main() {
+
+    int t;
+    cin>>t;
+
+    string infix[t], postfix[t];
+
+    for(int i = 0; i < t; ++i) {
+        cin>>infix[i];
+    }
+
+    for(int i = 0; i < t; ++i) {
+       postfix[i] = toPostfix(infix[i]);
+        cout<<"\n"<<postfix[i];
+    }
+
+    return 0;
+
+
+}
