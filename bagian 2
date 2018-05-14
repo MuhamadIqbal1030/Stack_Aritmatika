@@ -1,0 +1,59 @@
+string toPostfix(string infix) {
+    string postfix, stack;
+
+    for(int i=0; i<infix.length(); ++i) {
+
+        //if operand
+        if(isChar(infix[i])) {
+            postfix.push_back(infix[i]);
+        }
+
+        //if operator
+        else if(isOperator(infix[i])) {
+
+            //if stack is empty
+            if(stack.empty()) {
+                stack.push_back(infix[i]);
+                }
+
+            //if stack not empty
+            else if(!stack.empty()) {
+
+                //if (
+                if(infix[i]=='(') {
+                   stack.push_back(infix[i]);
+                   }
+
+                //if ) is encountered pop till ( to postfix
+                else if(infix[i]==')') {
+
+                    while(*(stack.end()-1)!='(') {
+
+                        postfix.push_back(*(stack.end()-1));
+                        stack = pop(stack);
+                          }
+                stack=pop(stack);
+                }
+
+                else {
+                    //pop until tos has lesser precedence or tos is null.
+                    while(isHigher(*(stack.end()-1),infix[i])) {
+                        postfix.push_back(*(stack.end()-1));
+                        stack = pop(stack);
+                        }
+
+                    if(!(isHigher(*(stack.end()-1),infix[i])))
+                        stack.push_back(infix[i]);
+                    }
+            }
+        }
+    }
+
+        while(!stack.empty()) {
+            string::iterator tos = stack.end() - 1;
+            postfix.push_back(*tos);
+            stack = pop(stack);
+        }
+
+    return postfix;
+}
